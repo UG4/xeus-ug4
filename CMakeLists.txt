@@ -65,14 +65,14 @@ set(MY_KERNEL_SRC
 add_executable(${EXECUTABLE_NAME} src/main.cpp ${MY_KERNEL_SRC} )
 target_include_directories(${EXECUTABLE_NAME} 
 	PUBLIC 
-	${UG4_ROOT}/ugcore/ugbase 
-	${UG4_ROOT}/externals/BoostForUG4)
+	$ENV{UG4_ROOT}/ugcore/ugbase 
+	$ENV{UG4_ROOT}/externals/BoostForUG4)
 target_link_directories(${EXECUTABLE_NAME} PUBLIC ${UG4_ROOT}/lib)
 
 
 
 
-# link_directories("${UG4_ROOT}/lib")
+# link_directories("$ENV{UG4_ROOT}/lib")
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE xeus ug4)
 
 if (APPLE)
