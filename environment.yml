@@ -1,0 +1,11 @@
+name: xeus-ug4
+channels:
+  - conda-forge
+dependencies:
+  - xeus
+# host Dependencies
+  - cppzmq
+  - xtl
+  - nlohmann_json
+# build dependencies
+  - cmake
