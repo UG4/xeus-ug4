@@ -42,9 +42,9 @@ endif()
 
 # TODO: Auto detect!
 # set(UG4_ROOT /Users/anaegel/Software/ug4-git)
-if(DEFINED ENV{UG4_ROOT})
+if(NOT DEFINED ENV{UG4_ROOT})
 	message( FATAL_ERROR "Setting env var. 'UG4_ROOT' is MANDATORY." )
-endif(DEFINED ENV{UG4_ROOT})
+endif(NOT DEFINED ENV{UG4_ROOT})
 
 # Target and link
 # ===============
