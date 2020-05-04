@@ -41,7 +41,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
 endif()
 
 # TODO: Auto detect!
-set(UG4_ROOT /Users/anaegel/Software/ug4-git)
+# set(UG4_ROOT /Users/anaegel/Software/ug4-git)
+if(DEFINED ENV{UG4_ROOT})
+	message( FATAL_ERROR "Setting env var. 'UG4_ROOT' is MANDATORY." )
+endif(DEFINED ENV{UG4_ROOT})
 
 # Target and link
 # ===============
@@ -50,8 +53,8 @@ set(UG4_ROOT /Users/anaegel/Software/ug4-git)
 set(MY_KERNEL_SRC
     src/custom_interpreter.cpp
     src/custom_interpreter.hpp
-    ${UG4_ROOT}/ugcore/ugbase/ug_shell/ugshell_main.cpp
-    ${UG4_ROOT}/ugcore/ugbase/ug_shell/shell.cpp
+    $ENV{UG4_ROOT}/ugcore/ugbase/ug_shell/ugshell_main.cpp
+    $ENV{UG4_ROOT}/ugcore/ugbase/ug_shell/shell.cpp
 )
 
 
