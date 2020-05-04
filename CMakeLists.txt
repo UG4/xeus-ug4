@@ -67,7 +67,10 @@ target_include_directories(${EXECUTABLE_NAME}
 	PUBLIC 
 	$ENV{UG4_ROOT}/ugcore/ugbase 
 	$ENV{UG4_ROOT}/externals/BoostForUG4)
-target_link_directories(${EXECUTABLE_NAME} PUBLIC ${UG4_ROOT}/lib)
+	
+target_link_directories(${EXECUTABLE_NAME} 
+	PUBLIC 
+	$ENV{UG4_ROOT}/lib)
 
 
 
