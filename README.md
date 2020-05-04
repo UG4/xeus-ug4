@@ -12,16 +12,22 @@ Launch the Jupyter notebook with 'jupyter notebook' or Jupyter lab with 'jupyter
 
 Currently, only installation from source is available.
 
-
+Conda dependencies:
+```
 conda create -n xeus-ug4-env
 conda activate xeus-ug4-env
 conda install cmake nlohmann_json xtl cppzmq xeus -c conda-forge
+```
 
+Install kernel:
+
+```
 mkdir build
 cd build
 cmake -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX ..
 make
 make install
+```
 
 ## Documentation
 
