@@ -4,7 +4,7 @@
 **xeus-ug4** is Jupyter kernel for UG4 based on the native implementation of the Jupyter protocol xeus.
 **xeus-ug4** is early developer preview. Is is not suitable for general usage yet.  
 
-##Usage
+## Usage
 
 Launch the Jupyter notebook with 'jupyter notebook' or Jupyter lab with 'jupyter lab' and launch a new Jupyter notebook by selecting the **UG4 LUA**  kernel.
 
