@@ -6,9 +6,10 @@ cd build
 
 echo $CONDA_DIR
 
-docker ps
+UG4_ROOT=echo "/opt/ug4-devel"
+echo $UG_ROOT
 
-setenv UG4_ROOT=/opt/ug4-devel
+docker ps
 
 cmake -D CMAKE_INSTALL_PREFIX=$CONDA_DIR/envs/notebook -D CMAKE_PREFIX_PATH=$CONDA_DIR/envs/notebook ..
 
