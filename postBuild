@@ -9,6 +9,8 @@ cd build
 echo $CONDA_DIR
 
 which docker
+which git
+
 
 export UG4_ROOT="/opt/ug4-devel"
 echo $UG4_ROOT
