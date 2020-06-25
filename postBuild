@@ -46,6 +46,10 @@ for i in layers/tar/*; do
 done
 rm -rf "layers"
 echo "Created $target_dir"
+
+ls "$target_dir" 
+mv "$target_dir" "/opt/ug4-devel"
+ls "/opt/ug4-devel"
 # Install xeus_ug4
 
 mkdir build
