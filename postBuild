@@ -6,8 +6,8 @@ cd build
 
 echo $CONDA_DIR
 
-UG4_ROOT=echo "/opt/ug4-devel"
-echo $UG_ROOT
+UG4_ROOT=echo '/opt/ug4-devel'
+echo $UG4_ROOT
 
 docker ps
 
