@@ -1,5 +1,6 @@
 # xeus-ug4
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/UG4/xeus-ug4/master)
 
 **xeus-ug4** is Jupyter kernel for UG4 based on the native implementation of the Jupyter protocol xeus.
 **xeus-ug4** is early developer preview. Is is not suitable for general usage yet.  
