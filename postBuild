@@ -8,7 +8,7 @@ folder_filter="/opt/ug4-devel"
 
 # 2.
 work_dir=.
-target_dir="$work_dir/output"
+target_dir="$work_dir/ug4-devel"
 
 
 # 3.
@@ -47,9 +47,8 @@ done
 rm -rf "layers"
 echo "Created $target_dir"
 
-ls "$target_dir" 
-mv "$target_dir" "/opt/ug4-devel"
-ls "/opt/ug4-devel"
+ls $target_dir
+
 # Install xeus_ug4
 
 mkdir build
