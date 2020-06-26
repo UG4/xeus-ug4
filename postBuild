@@ -55,7 +55,7 @@ mv "$target_dir/opt" "$HOME"
 cd $HOME
 ls -l
 
-export UG4_ROOT="$HOME/opt/ug4-devel"
+export UG4_ROOT="$HOME/opt/ug4-dev"
 echo "Contents of $UG4_ROOT:"
 ls -l $UG4_ROOT
 
