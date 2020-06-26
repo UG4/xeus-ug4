@@ -4,11 +4,11 @@
 # 1.
 image="anaegel/ug4-devel"
 version="latest"
-folder_filter="/opt"
+folder_filter="opt"
 
 # 2.
 work_dir=.
-target_dir="$work_dir/ug4-devel"
+target_dir="$work_dir/opt"
 
 
 # 3.
@@ -49,7 +49,7 @@ echo "Created $target_dir"
 
 
 ls -l
-ls -l ug4-devel
+ls -l opt
 
 # Install xeus_ug4
 
