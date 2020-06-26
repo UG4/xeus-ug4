@@ -8,7 +8,7 @@ folder_filter="opt"
 
 # 2.
 work_dir=.
-target_dir="$work_dir/opt"
+target_dir="$work_dir/extract"
 
 
 # 3.
@@ -49,7 +49,11 @@ echo "Created $target_dir"
 
 
 ls -l
-ls -l opt/opt
+ls -l "$target_dir/opt"
+
+mv "$target_dir/opt" /.
+cd /
+ls -l
 
 # Install xeus_ug4
 
