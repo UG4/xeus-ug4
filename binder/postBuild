@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Extraction routine from https://rmannibucau.metawerx.net/post/docker-extracts-fileystem-with-bash
+# 1.
+image="anaegel/ug4-devel-bionic"
+version="latest"
+folder_filter="opt"
+
+# 2.
+work_dir=.
+target_dir="$work_dir/extract"
+
+
+# 3.
+cd "$work_dir"
+
+# 4. get an API token
+echo "Getting an API token"
+token=$(curl --silent --header 'GET' "https://auth.docker.io/token?service=registry.docker.io&scope=repository:$image:pull" | jq -r '.token')
+
+# 5. download manifest to get layers
+echo "Retrieving $image:$version layers list"
+layers=$(curl --silent --request 'GET' --header "Authorization: Bearer $token" "https://registry-1.docker.io/v2/$image/manifests/$version" | jq -r '.fsLayers[].blobSum')
+
+# 6. download and extract each layer
+mkdir -p "layers/gz"
+mkdir -p "layers/tar"
+for i in $layers; do
+  name="${i/*:/}"
+  out="layers/gz/$name.gz"
+  echo "Downloading layer $name"
+  curl --silent --location --request 'GET' --header "Authorization: Bearer $token" "https://registry-1.docker.io/v2/$image/blobs/$i" > "$out"
+  gunzip -c "$out" > "layers/tar/$name"
+  rm "$out"
+done
+
+# 7. for each layer extract the actual files in the target directory
+mkdir -p "$target_dir"
+for i in layers/tar/*; do
+  if tar -tf "$i" "$folder_filter" >/dev/null 2>&1; then
+    echo "Extracting $i"
+    tar -xf "$i" -C "$target_dir" "$folder_filter"
+  else
+    echo "No $folder_filter in $i, skipping"
+  fi
+done
+rm -rf "layers"
+echo "Created $target_dir"
+
+
+ls -l
+ls -l "$target_dir/opt"
+
+mv "$target_dir/opt" "$HOME"
+cd $HOME
+ls -l
+
+export UG4_ROOT="$HOME/opt/ug4-dev"
+echo "Contents of $UG4_ROOT:"
+ls -l $UG4_ROOT
+
+
+# Install xeus_ug4
+
+mkdir tmp-build-xeus
+cd tmp-build-xeus
+
+echo $CONDA_DIR
+
+
+
+cmake -D CMAKE_INSTALL_PREFIX=$CONDA_DIR/envs/notebook -D CMAKE_PREFIX_PATH=$CONDA_DIR/envs/notebook ..
+
+make install
