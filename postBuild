@@ -47,7 +47,7 @@ done
 rm -rf "layers"
 echo "Created $target_dir"
 
-cd  $target_dir
+
 ls -l
 
 # Install xeus_ug4
