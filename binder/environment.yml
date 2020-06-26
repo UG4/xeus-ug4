@@ -9,3 +9,8 @@ dependencies:
   - nlohmann_json
 # build dependencies
   - cmake
+# visualization
+  - vtk
+  - itkwidgets
+  - itk
+  - matplotlib
