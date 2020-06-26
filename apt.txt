@@ -1,3 +1,3 @@
 jq 
-liblapack
-libblas
+liblapack-dev
+libblas-dev
