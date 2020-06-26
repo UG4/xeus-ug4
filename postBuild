@@ -55,6 +55,11 @@ mv "$target_dir/opt" "$HOME"
 cd $HOME
 ls -l
 
+export UG4_ROOT="$HOME/opt/ug4-devel"
+echo "Contents of $UG4_ROOT:"
+ls -l $UG4_ROOT
+
+
 # Install xeus_ug4
 
 mkdir tmp-build-xeus
@@ -62,8 +67,7 @@ cd tmp-build-xeus
 
 echo $CONDA_DIR
 
-export UG4_ROOT="$HOME/opt/ug4-devel"
-echo $UG4_ROOT
+
 
 cmake -D CMAKE_INSTALL_PREFIX=$CONDA_DIR/envs/notebook -D CMAKE_PREFIX_PATH=$CONDA_DIR/envs/notebook ..
 
