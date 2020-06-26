@@ -1,3 +1,4 @@
 jq 
 liblapack-dev
 libblas-dev
+libgl1-mesa-glx
