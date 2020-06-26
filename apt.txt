@@ -1,0 +1,3 @@
+jq 
+liblapack-dev
+libblas-dev

@@ -41,7 +41,10 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
 endif()
 
 # TODO: Auto detect!
-set(UG4_ROOT /Users/anaegel/Software/ug4-git)
+# set(UG4_ROOT /Users/anaegel/Software/ug4-git)
+if(NOT DEFINED ENV{UG4_ROOT})
+	message( FATAL_ERROR "Setting env var. 'UG4_ROOT' is MANDATORY." )
+endif(NOT DEFINED ENV{UG4_ROOT})
 
 # Target and link
 # ===============
@@ -50,8 +53,8 @@ set(UG4_ROOT /Users/anaegel/Software/ug4-git)
 set(MY_KERNEL_SRC
     src/custom_interpreter.cpp
     src/custom_interpreter.hpp
-    ${UG4_ROOT}/ugcore/ugbase/ug_shell/ugshell_main.cpp
-    ${UG4_ROOT}/ugcore/ugbase/ug_shell/shell.cpp
+    $ENV{UG4_ROOT}/ugcore/ugbase/ug_shell/ugshell_main.cpp
+    $ENV{UG4_ROOT}/ugcore/ugbase/ug_shell/shell.cpp
 )
 
 
@@ -62,14 +65,17 @@ set(MY_KERNEL_SRC
 add_executable(${EXECUTABLE_NAME} src/main.cpp ${MY_KERNEL_SRC} )
 target_include_directories(${EXECUTABLE_NAME} 
 	PUBLIC 
-	${UG4_ROOT}/ugcore/ugbase 
-	${UG4_ROOT}/externals/BoostForUG4)
-target_link_directories(${EXECUTABLE_NAME} PUBLIC ${UG4_ROOT}/lib)
+	$ENV{UG4_ROOT}/ugcore/ugbase 
+	$ENV{UG4_ROOT}/externals/BoostForUG4)
+	
+target_link_directories(${EXECUTABLE_NAME} 
+	PUBLIC 
+	$ENV{UG4_ROOT}/lib)
 
 
 
 
-# link_directories("${UG4_ROOT}/lib")
+# link_directories("$ENV{UG4_ROOT}/lib")
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE xeus ug4)
 
 if (APPLE)
