@@ -49,7 +49,7 @@ echo "Created $target_dir"
 
 
 ls -l
-ls -l opt
+ls -l opt/opt
 
 # Install xeus_ug4
 
