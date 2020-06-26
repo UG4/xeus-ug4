@@ -1,5 +1,5 @@
  #!/bin/bash
- export UG4_ROOT=$LD_LIBRARY_PATH:/home/jovyan/opt/ug4-dev
+ export UG4_ROOT=/home/jovyan/opt/ug4-dev
  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$UG4_ROOT/lib
  
  exec "$@" 
