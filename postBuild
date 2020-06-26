@@ -51,22 +51,18 @@ echo "Created $target_dir"
 ls -l
 ls -l "$target_dir/opt"
 
-mv "$target_dir/opt" /.
-cd /
+mv "$target_dir/opt" "$HOME"
+cd $HOME
 ls -l
 
 # Install xeus_ug4
 
-mkdir build
-cd build
+mkdir tmp-build-xeus
+cd tmp-build-xeus
 
 echo $CONDA_DIR
 
-which docker
-which git
-
-
-export UG4_ROOT="/opt/ug4-devel"
+export UG4_ROOT="$HOME/opt/ug4-devel"
 echo $UG4_ROOT
 
 cmake -D CMAKE_INSTALL_PREFIX=$CONDA_DIR/envs/notebook -D CMAKE_PREFIX_PATH=$CONDA_DIR/envs/notebook ..
