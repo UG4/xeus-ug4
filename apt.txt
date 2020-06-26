@@ -1,1 +1,3 @@
-jq
+jq 
+liblapack
+libblas
