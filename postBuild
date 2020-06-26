@@ -4,7 +4,7 @@
 # 1.
 image="anaegel/ug4-devel"
 version="latest"
-folder_filter="/opt/ug4-devel"
+folder_filter="/opt"
 
 # 2.
 work_dir=.
