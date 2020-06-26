@@ -113,10 +113,9 @@ namespace ug
 
         	//	quit_all_mpi_procs_in_parallel();
 
-
         	ename = "UGError";
         	// evalue = err.what();
-        	 evalue = "---";
+        	evalue = "---";
         	errorOccurred=true;
 
         }
