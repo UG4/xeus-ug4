@@ -49,6 +49,7 @@ echo "Created $target_dir"
 
 
 ls -l
+ls -l ug4-devel
 
 # Install xeus_ug4
 
