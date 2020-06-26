@@ -1,8 +1,8 @@
 #!/bin/bash
 
-
+# Extraction routine from https://rmannibucau.metawerx.net/post/docker-extracts-fileystem-with-bash
 # 1.
-image="anaegel/ug4-devel"
+image="anaegel/ug4-devel-bionic"
 version="latest"
 folder_filter="opt"
 
