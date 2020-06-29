@@ -18,14 +18,11 @@ configure_file (
 # ============
 
 # Be sure to use recent versions
-set(xeus_REQUIRED_VERSION 0.20.0)
+set(xeus_REQUIRED_VERSION 0.19.1)
 set(cppzmq_REQUIRED_VERSION 4.3.0)
 
 find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)
 find_package(cppzmq ${cppzmq_REQUIRED_VERSION} REQUIRED)
-message(WARNING "Found: ${xeus_FOUND}" )
-message(WARNING "Found: ${xeus_CONFIG}" )
-
 
 # find_library(UG4_LIBRARY ug4 HINTS /Users/anaegel/Software/ug4-git)
 # Flags
@@ -98,21 +95,13 @@ set_target_properties(${EXECUTABLE_NAME} PROPERTIES
 
 # Installation
 # ============
-set(MY_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
-set(MY_INSTALL_DIR "/Users/anaegel/anaconda2")
 
 # Install my_kernel
 install(TARGETS ${EXECUTABLE_NAME}
-        RUNTIME DESTINATION ${MY_INSTALL_DIR}/bin)
-
-message(WARNING "Installing to: ${MY_INSTALL_DIR}" )
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # Configuration and data directories for jupyter and my_kernel
-set(XJUPYTER_DATA_DIR "${MY_INSTALL_DIR}/share/jupyter" 
-	CACHE STRING "Jupyter data directory")
-
-message(WARNING "Installing to: ${XJUPYTER_DATA_DIR}" )
-
+set(XJUPYTER_DATA_DIR "share/jupyter" CACHE STRING "Jupyter data directory")
 
 # Install Jupyter kernelspecs
 set(MY_KERNELSPEC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/share/jupyter/kernels)
