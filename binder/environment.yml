@@ -12,7 +12,7 @@ dependencies:
   - cmake
 # visualization
   - vtk
-  - itkwidgets
+  - itkwidgets>=0.25.2
   - itk
   - matplotlib
   - pyvista
