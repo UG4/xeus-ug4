@@ -16,11 +16,4 @@ dependencies:
   - itk
   - matplotlib
   - pyvista
-  - bokeh
-  - pyviz_comms
-  - panel
-  - lxml
-  - pip
-  - pip:
-    - git+git://github.com/pyvista/pyvista@master
-    - pyct
+  
