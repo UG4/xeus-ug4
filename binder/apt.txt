@@ -3,4 +3,4 @@ liblapack-dev
 libblas-dev
 libgl1-mesa-glx
 xvfb
-superlu
+libsuperlu5
