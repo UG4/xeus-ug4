@@ -1,6 +1,7 @@
 name: xeus-ug4
 channels:
   - conda-forge
+  - pyviz
 dependencies:
   - xeus
 # host Dependencies
