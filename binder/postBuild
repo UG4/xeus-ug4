@@ -72,3 +72,17 @@ echo $CONDA_DIR
 cmake -D CMAKE_INSTALL_PREFIX=$CONDA_DIR/envs/notebook -D CMAKE_PREFIX_PATH=$CONDA_DIR/envs/notebook ..
 
 make install
+
+
+
+# Cleanup
+rm -rf $HOME/extract
+rm -rf $HOME/tmp-build-xeus
+rm -rf $HOME/share
+rm -rf $HOME/src
+rm -rf $HOME/opt/ug4-dev/build
+rm -rf $HOME/opt/ug4-dev/external
+rm -rf $HOME/opt/ug4-dev/ugcore/ugbase
+
+
+
