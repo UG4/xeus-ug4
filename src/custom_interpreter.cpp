@@ -145,13 +145,12 @@ namespace ug
         	 jresult["status"] = "ok";
         }
 
-
-       // pub_data["text/plain"] = "Hello World !!" << code;
+        // pub_data["text/plain"] = "Hello World !!" << code;
         // pub_data["text/plain"] = code;
         pub_data["text/plain"] = m_out.str();
         m_out.str(std::string()); // reset
 
-        publish_execution_result(execution_counter, std::move(pub_data), nl::json());
+        publish_execution_result(execution_counter, std::move(pub_data), nl::json::object());
 
         // You can also use this method for publishing errors to the client, if the code
         // failed to execute
@@ -172,29 +171,27 @@ namespace ug
     	m_cout_buff = std::cout.rdbuf();
     	std::cout.rdbuf(m_out.rdbuf());
 
-
-
-
     	// Init from ugshell_main.
     	char *argv = "\0";
 
     	bool errorOccurred = false;
     	int ret = 0;
-    		// INIT PATH
-    		ug_init_path(&argv, errorOccurred);
+
+    	// INIT PATH
+    	ug_init_path(&argv, errorOccurred);
 
     	//	INIT STANDARD BRIDGE
-    		ug_init_bridge(errorOccurred);
+    	ug_init_bridge(errorOccurred);
 
     	//	INIT PLUGINS
-    		ug_init_plugins(errorOccurred);
+    	ug_init_plugins(errorOccurred);
 
-    		if(!errorOccurred)
-    		{
+    	if(!errorOccurred)
+    	{
     			ug_check_registry(errorOccurred);
-    		}
+    	}
 
-    		ug_init_luashell(0, &argv);
+    	ug_init_luashell(0, &argv);
     }
 
     nl::json xeus_interpreter::complete_request_impl(const std::string& code,
