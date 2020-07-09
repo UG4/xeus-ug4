@@ -34,7 +34,8 @@ make install
 ## Documentation
 
 Documentation is not available yet.
-Dependencies
+
+## Dependencies
 
 xeus-ug4 depends on
 
