@@ -24,7 +24,7 @@ set(cppzmq_REQUIRED_VERSION 4.3.0)
 find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)
 find_package(cppzmq ${cppzmq_REQUIRED_VERSION} REQUIRED)
 
-# find_library(UG4_LIBRARY ug4 HINTS /Users/anaegel/Software/ug4-git)
+
 # Flags
 # =====
 
@@ -40,8 +40,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
     endif()
 endif()
 
-# TODO: Auto detect!
-# set(UG4_ROOT /Users/anaegel/Software/ug4-git)
+# Identify UG4 installation
 if(NOT DEFINED ENV{UG4_ROOT})
 	message( FATAL_ERROR "Setting env var. 'UG4_ROOT' is MANDATORY." )
 endif(NOT DEFINED ENV{UG4_ROOT})
@@ -49,7 +48,7 @@ endif(NOT DEFINED ENV{UG4_ROOT})
 # Target and link
 # ===============
 
-# my_kernel source files
+# Kernel source files
 set(MY_KERNEL_SRC
     src/custom_interpreter.cpp
     src/custom_interpreter.hpp
@@ -58,10 +57,7 @@ set(MY_KERNEL_SRC
 )
 
 
-
-
-
-# My kernel executable
+# Kernel executable
 add_executable(${EXECUTABLE_NAME} src/main.cpp ${MY_KERNEL_SRC} )
 target_include_directories(${EXECUTABLE_NAME} 
 	PUBLIC 
@@ -69,14 +65,11 @@ target_include_directories(${EXECUTABLE_NAME}
 	$ENV{UG4_ROOT}/externals/BoostForUG4)
 	
 target_link_directories(${EXECUTABLE_NAME} 
-	PUBLIC 
-	$ENV{UG4_ROOT}/lib)
+	PUBLIC $ENV{UG4_ROOT}/lib)
 
 
-
-
-# link_directories("$ENV{UG4_ROOT}/lib")
-target_link_libraries(${EXECUTABLE_NAME} PRIVATE xeus ug4)
+target_link_libraries(${EXECUTABLE_NAME} 
+	PRIVATE xeus ug4)
 
 if (APPLE)
     set_target_properties(${EXECUTABLE_NAME} PROPERTIES
@@ -93,10 +86,12 @@ set_target_properties(${EXECUTABLE_NAME} PROPERTIES
     INSTALL_RPATH_USE_LINK_PATH TRUE
 )
 
+
+
 # Installation
 # ============
 
-# Install my_kernel
+# Install kernel
 install(TARGETS ${EXECUTABLE_NAME}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
@@ -104,7 +99,7 @@ install(TARGETS ${EXECUTABLE_NAME}
 set(XJUPYTER_DATA_DIR "share/jupyter" CACHE STRING "Jupyter data directory")
 
 # Install Jupyter kernelspecs
-set(MY_KERNELSPEC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/share/jupyter/kernels)
-install(DIRECTORY ${MY_KERNELSPEC_DIR}
+set(UG4_KERNELSPEC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/share/jupyter/kernels)
+install(DIRECTORY ${UG4_KERNELSPEC_DIR}
         DESTINATION ${XJUPYTER_DATA_DIR}
         PATTERN "*.in" EXCLUDE)
