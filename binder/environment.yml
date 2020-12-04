@@ -4,6 +4,9 @@ channels:
 dependencies:
   - python=2.7
   - xeus
+# for xwidgets (in UG4's Jupyter plugin)
+  - xeus-cling 
+  - xwidgets
 # host Dependencies
   - cppzmq
   - xtl
