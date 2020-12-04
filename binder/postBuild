@@ -59,7 +59,7 @@ export UG4_ROOT="$HOME/opt/ug4-dev"
 echo "Contents of $UG4_ROOT:"
 ls -l $UG4_ROOT
 cd $UG4_ROOT
-ughub install JupyterToolbox
+git clone https://github.com/UG4/plugin_JupyterToolbox.git JupyterToolbox
 cd build
 cmake .. -DJupyterToolbox=ON
 make
