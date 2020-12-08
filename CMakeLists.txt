@@ -42,11 +42,15 @@ endif()
 
 
 # Identify UG4 installation
+message(STATUS "UG4_ROOT: $ENV{UG4_ROOT}")
 set (MY_UG4_ROOT $ENV{UG4_ROOT})
-if(NOT DEFINED ${MY_UG4_ROOT})
+
+if(NOT DEFINED ENV{UG4_ROOT})
 	set(MY_UG4_ROOT "${CMAKE_CURRENT_SOURCE_DIR}../../../")
 	message(WARNING "Environment variable 'UG4_ROOT' has not been used. " )
-endif(NOT DEFINED ${MY_UG4_ROOT})
+else (NOT DEFINED ENV{UG4_ROOT})
+	message(WARNING "Environment variable 'UG4_ROOT' has been used. " )
+endif(NOT DEFINED ENV{UG4_ROOT})
 
 # Target and link
 # ===============
@@ -62,17 +66,30 @@ set(MY_KERNEL_SRC
 
 # Kernel executable
 add_executable(${EXECUTABLE_NAME} src/main.cpp ${MY_KERNEL_SRC} )
+
+
+find_library(ug4_LIBRARY NAMES ug4 HINTS ${MY_UG4_ROOT}/lib REQUIRED)	
+message(STATUS "Using ${ug4_LIBRARY}")
+
+# Find xeus libraries
+find_package(xeus REQUIRED)
+find_package(xtl REQUIRED)
+
+if(NOT DEFINED ${xeus_LIBRARY})
+			find_library(xeus_LIBRARY NAMES xeus REQUIRED PATHS "${xtl_INCLUDE_DIRS}/../lib")
+endif() 
+
+# Expand include path
 target_include_directories(${EXECUTABLE_NAME} 
 	PUBLIC 
-	$ENV{UG4_ROOT}/ugcore/ugbase 
-	$ENV{UG4_ROOT}/externals/BoostForUG4)
-	
-target_link_directories(${EXECUTABLE_NAME} 
-	PUBLIC $ENV{UG4_ROOT}/lib)
+	${MY_UG4_ROOT}/ugcore/ugbase 
+	${MY_UG4_ROOT}/externals/BoostForUG4
+	${xtl_INCLUDE_DIRS}
+	)
 
 
 target_link_libraries(${EXECUTABLE_NAME} 
-	PRIVATE xeus ug4)
+	PRIVATE ${xeus_LIBRARY} ${ug4_LIBRARY})
 
 if (APPLE)
     set_target_properties(${EXECUTABLE_NAME} PROPERTIES
