@@ -58,17 +58,18 @@ ls -l
 export UG4_ROOT="$HOME/opt/ug4-dev"
 echo "Contents of $UG4_ROOT:"
 ls -l $UG4_ROOT
-
+cd $UG4_ROOT
+git clone https://github.com/UG4/plugin_JupyterToolbox.git JupyterToolbox
+cd build
+cmake .. -DJupyterToolbox=ON
+make
 
 # Install xeus_ug4
-
+cd $HOME
 mkdir tmp-build-xeus
 cd tmp-build-xeus
 
 echo $CONDA_DIR
-
-
-
 cmake -D CMAKE_INSTALL_PREFIX=$CONDA_DIR/envs/notebook -D CMAKE_PREFIX_PATH=$CONDA_DIR/envs/notebook ..
 
 make install
