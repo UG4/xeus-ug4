@@ -18,7 +18,7 @@ configure_file (
 # ============
 
 # Be sure to use recent versions
-set(xeus_REQUIRED_VERSION 0.19.1)
+set(xeus_REQUIRED_VERSION 0.25)
 set(cppzmq_REQUIRED_VERSION 4.3.0)
 
 find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)
@@ -40,10 +40,13 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
     endif()
 endif()
 
+
 # Identify UG4 installation
-if(NOT DEFINED ENV{UG4_ROOT})
-	message( FATAL_ERROR "Setting env var. 'UG4_ROOT' is MANDATORY." )
-endif(NOT DEFINED ENV{UG4_ROOT})
+set (MY_UG4_ROOT $ENV{UG4_ROOT})
+if(NOT DEFINED ${MY_UG4_ROOT})
+	set(MY_UG4_ROOT "${CMAKE_CURRENT_SOURCE_DIR}../../../")
+	message(WARNING "Environment variable 'UG4_ROOT' has not been used. " )
+endif(NOT DEFINED ${MY_UG4_ROOT})
 
 # Target and link
 # ===============
@@ -52,8 +55,8 @@ endif(NOT DEFINED ENV{UG4_ROOT})
 set(MY_KERNEL_SRC
     src/custom_interpreter.cpp
     src/custom_interpreter.hpp
-    $ENV{UG4_ROOT}/ugcore/ugbase/ug_shell/ugshell_main.cpp
-    $ENV{UG4_ROOT}/ugcore/ugbase/ug_shell/shell.cpp
+    ${MY_UG4_ROOT}/ugcore/ugbase/ug_shell/ugshell_main.cpp
+    ${MY_UG4_ROOT}/ugcore/ugbase/ug_shell/shell.cpp
 )
 
 
