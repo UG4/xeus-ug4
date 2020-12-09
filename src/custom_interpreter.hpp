@@ -29,9 +29,13 @@ namespace ug
 
     	xeus_interpreter() //= default;
     	: xinterpreter(), m_out(), m_cout_buff(NULL)
-    	{}
+    	{
+    		  redirect_output();
+    	}
 
-        virtual ~xeus_interpreter() = default;
+        virtual ~xeus_interpreter() {
+        	 restore_output();
+        }
 
     private:
 
@@ -56,6 +60,10 @@ namespace ug
         nl::json kernel_info_request_impl() override;
 
         void shutdown_request_impl() override;
+
+        void redirect_output();
+        void restore_output();
+
 
         std::ostringstream m_out;
         std::basic_streambuf<char, std::char_traits<char> > *m_cout_buff;

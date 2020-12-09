@@ -30,7 +30,48 @@ void ug_init_luashell(int, char**);
 
 namespace ug
 {
+/// Init.
+   void xeus_interpreter::configure_impl()
+   {
+    // Perform some operations
+   	std::cerr << "xeus_interpreter::configure_impl" << std::endl;
 
+   	// Redirect std::cout with backup
+   	m_cout_buff = std::cout.rdbuf();
+   	std::cout.rdbuf(m_out.rdbuf());
+
+   	// Init from ugshell_main.
+   	char *argv = "\0";
+
+   	bool errorOccurred = false;
+   	int ret = 0;
+
+   	// INIT PATH
+   	ug_init_path(&argv, errorOccurred);
+
+   	//	INIT STANDARD BRIDGE
+   	ug_init_bridge(errorOccurred);
+
+   	//	INIT PLUGINS
+   	ug_init_plugins(errorOccurred);
+
+   	if(!errorOccurred)
+   	{
+   			ug_check_registry(errorOccurred);
+   	}
+
+   	ug_init_luashell(0, &argv);
+
+   	//! Register interpreter
+   	if (xeus::register_interpreter(static_cast<xeus::xinterpreter*>(this)))
+   	{
+   		std::cerr << "Registered interpreter!" << std::endl;
+   	}
+   	else
+   	{
+   		std::cerr << "FAILED: interpreter!" << std::endl;
+   	}
+   }
 
 	/// Forward request to Lua
     nl::json xeus_interpreter::execute_request_impl(int execution_counter, // Typically the cell number
@@ -50,13 +91,10 @@ namespace ug
         // as third argument.
         // Replace "Hello World !!" by what you want to be displayed under the execution cell
     	nl::json jresult;  // return value
-    	nl::json pub_data;
-
 
 
         bool errorOccurred=false;
         static const char* errSymb = " % ";
-
 
         // Error handling
         std::string ename;
@@ -64,7 +102,7 @@ namespace ug
         std::vector<std::string> etraceback();
 
         try{
-        	// try to execute code
+        	// Try to execute code.
         	script::ParseAndExecuteBuffer(code.c_str());
         }
         catch(SoftAbort& err){
@@ -139,60 +177,32 @@ namespace ug
 
         	std::vector<std::string> traceback({ename + ": " + evalue});
         	publish_execution_error(ename, evalue, traceback);
-
+        	 jresult["status"] = "error";
         } else
         {
         	 jresult["status"] = "ok";
+        	 jresult["payload"] = nl::json::array();
+        	 jresult["user_expressions"] = nl::json::object();
         }
 
-        // pub_data["text/plain"] = "Hello World !!" << code;
-        // pub_data["text/plain"] = code;
-        pub_data["text/plain"] = m_out.str();
+        // mime_data["text/plain"] = "Hello World !!" << code;
+        // mime_data["text/plain"] = code;
+        nl::json mime_data;
+        mime_data["text/plain"] = m_out.str();
         m_out.str(std::string()); // reset
 
-        publish_execution_result(execution_counter, std::move(pub_data), nl::json::object());
+        publish_execution_result(execution_counter, std::move(mime_data), nl::json::object());
 
         // You can also use this method for publishing errors to the client, if the code
         // failed to execute
         // publish_execution_error(error_name, error_value, error_traceback);
 
 
-        jresult["status"] = errorOccurred  ? "error" : "ok"; // "abort"
+       // jresult["status"] = errorOccurred  ? "error" : "ok"; // "abort"
         return jresult;
     }
 
-    /// Init.
-    void xeus_interpreter::configure_impl()
-    {
-        // Perform some operations
-    	std::cerr << "xeus_interpreter::configure_impl" << std::endl;
 
-    	// Redirect std::cout with backup
-    	m_cout_buff = std::cout.rdbuf();
-    	std::cout.rdbuf(m_out.rdbuf());
-
-    	// Init from ugshell_main.
-    	char *argv = "\0";
-
-    	bool errorOccurred = false;
-    	int ret = 0;
-
-    	// INIT PATH
-    	ug_init_path(&argv, errorOccurred);
-
-    	//	INIT STANDARD BRIDGE
-    	ug_init_bridge(errorOccurred);
-
-    	//	INIT PLUGINS
-    	ug_init_plugins(errorOccurred);
-
-    	if(!errorOccurred)
-    	{
-    			ug_check_registry(errorOccurred);
-    	}
-
-    	ug_init_luashell(0, &argv);
-    }
 
     nl::json xeus_interpreter::complete_request_impl(const std::string& code,
                                                        int cursor_pos)
@@ -265,20 +275,16 @@ namespace ug
         result["implementation"] = "UG4 Kernel";
         result["implementation_version"] = "0.1.0";
 
-        std::string banner = ""
-                " //** **  /**      /**    /**/**              **    //    **//**  /**       **    // \n"
-                "  //***   /******* /**    /**/********* *****/**         **  //** /**      /**       \n"
-                "   **/**  /**////  /**    /**////////**///// /**        **********/**      /**       \n"
-                "\n"
-                " Implementation of a calculator based on RPN through Xeus";
+        std::string banner =  " Implementation of UG4-LUA-kernel using Xeus";
         result["banner"] = banner;
 
         result["language_info"]["name"] = "lua";
         result["language_info"]["version"] = "1.0";
         result["language_info"]["mimetype"] = "text/x-lua";
+        result["language_info"]["codemirror_mode"] = "text/x-lua";
         result["language_info"]["file_extension"] = ".lua";
-        result["language_info"]["codemirror_mode"] = "lua";
 
+        result["status"] = "ok";
         return result;
     }
 
@@ -295,5 +301,40 @@ namespace ug
 
     }
 
+   /*
+    *
+    *
+     void xeus_interpreter::redirect_output()
+    {
+    	// Redirect std::cout with backup
+    	m_cout_buff = std::cout.rdbuf();
+    	std::cout.rdbuf(m_out.rdbuf());
+    }
+
+    void xeus_interpreter::restore_output()
+    {
+    	std::cout.rdbuf(m_cout_buff);
+    }
+*/
+    void xeus_interpreter::redirect_output()
+       {
+          //  p_cout_strbuf = std::cout.rdbuf();
+          // p_cerr_strbuf = std::cerr.rdbuf();
+
+           //std::cout.rdbuf(&m_cout_buffer);
+           //std::cerr.rdbuf(&m_cerr_buffer);
+
+       }
+
+       void xeus_interpreter::restore_output()
+       {
+          // std::cout.rdbuf(p_cout_strbuf);
+          // std::cerr.rdbuf(p_cerr_strbuf);
+
+           // No need to remove the injected versions of [f]printf: As they forward
+           // to std::cout and std::cerr, these are handled implicitly.
+       }
 }
+
+
 
