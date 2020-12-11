@@ -78,6 +78,7 @@ find_package(xtl REQUIRED)
 if(NOT DEFINED ${xeus_LIBRARY})
 			find_library(xeus_LIBRARY NAMES xeus REQUIRED PATHS "${xtl_INCLUDE_DIRS}/../lib")
 endif() 
+message(STATUS "Using ${xeus_LIBRARY}")
 
 # Expand include path
 target_include_directories(${EXECUTABLE_NAME} 
