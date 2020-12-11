@@ -41,7 +41,7 @@ namespace ug
    	std::cout.rdbuf(m_out.rdbuf());
 
    	// Init from ugshell_main.
-   	char *argv = "\0";
+   	char *argv = (char*) "\0";
 
    	bool errorOccurred = false;
    	int ret = 0;
@@ -99,7 +99,7 @@ namespace ug
         // Error handling
         std::string ename;
         std::string evalue;
-        std::vector<std::string> etraceback();
+        std::vector<std::string> etraceback;
 
         try{
         	// Try to execute code.
