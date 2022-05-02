@@ -39,6 +39,16 @@ jupyter kernelspec install --user /opt/conda/envs/xeus-ug4-env/share/jupyter/ker
 ## Documentation
 
 Documentation is not available yet.
+If you run `jupyter kernelspec list` you should see an output like this. [Note the `(base)` env]
+```
+(base) jovyan@b7d9f90be5c5:~$ jupyter kernelspec list
+Available kernels:
+  ug4_kernel    /home/jovyan/.local/share/jupyter/kernels/ug4_kernel
+  octave        /opt/conda/share/jupyter/kernels/octave
+  python3       /opt/conda/share/jupyter/kernels/python3
+```
+
+There are also plans to provide a link to a Docker repo where you can just pull the image.
 
 ## Dependencies
 
