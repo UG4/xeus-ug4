@@ -1,0 +1,21 @@
+version: "3.9" 
+services:
+  modsim:
+    ports:
+      - '8888:8888'
+      - '8889:8889'
+    dns:
+      - 8.8.8.8
+    user: jovyan
+    environment:
+      - GRANT_SUDO=yes
+      - CHOWN_HOME=yes
+      - CHOWN_HOME_OPTS="-R"
+    volumes:
+      - ./myFiles:/home/jovyan/myFiles
+    image: modsim:latest
+volumes:
+  myFiles:
+    external: true
+
+

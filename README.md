@@ -16,9 +16,9 @@ Currently, only installation from source is available.
 
 Conda dependencies:
 ```
-conda create -n xeus-ug4-env
-conda activate xeus-ug4-env
-conda install cmake nlohmann_json xtl cppzmq xeus -c conda-forge
+$XEUS_ENV="xeus-ug4-env"
+conda install -n ${XEUS_ENV} -y -c conda-forge cmake cppzmq xwidgets nlohmann_json xtl xeus-cling xeus==0.25 jupyterlab
+conda install -n ${XEUS_ENV} -y -c anaconda jupyter
 ```
 
 Install kernel:
@@ -31,16 +31,37 @@ make
 make install
 ```
 
+Introduce jupyter to new kernel as mention here [ipython.readthedocs.io/](https://ipython.readthedocs.io/en/stable/install/kernel_install.html):
+```
+jupyter kernelspec install --user /opt/conda/envs/xeus-ug4-env/share/jupyter/kernels/ug4_kernel
+```
+
 ## Documentation
 
 Documentation is not available yet.
+If you run `jupyter kernelspec list` you should see an output like this. [Note the `(base)` env]
+```
+(base) jovyan@b7d9f90be5c5:~$ jupyter kernelspec list
+Available kernels:
+  ug4_kernel    /home/jovyan/.local/share/jupyter/kernels/ug4_kernel
+  octave        /opt/conda/share/jupyter/kernels/octave
+  python3       /opt/conda/share/jupyter/kernels/python3
+```
+
+There are also plans to provide a link to a Docker repo where you can just pull the image.
 
 ## Dependencies
 
 xeus-ug4 depends on
-
-    xeus
-    nlohmann/json
+```
+cppzmq 
+xwidgets 
+nlohmann_json
+xtl 
+xeus-cling 
+xeus==0.25 
+jupyterlab
+```
     
 
 ## License
