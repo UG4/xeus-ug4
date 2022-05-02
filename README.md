@@ -16,9 +16,9 @@ Currently, only installation from source is available.
 
 Conda dependencies:
 ```
-conda create -n xeus-ug4-env
-conda activate xeus-ug4-env
-conda install cmake nlohmann_json xtl cppzmq xeus -c conda-forge
+$XEUX_ENV="xeus-ug4-env"
+conda install -n ${XEUS_ENV} -y -c conda-forge cmake cppzmq xwidgets nlohmann_json xtl xeus-cling xeus==0.25 jupyterlab
+conda install -n ${XEUS_ENV} -y -c anaconda jupyter
 ```
 
 Install kernel:
@@ -30,6 +30,8 @@ cmake -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX ..
 make
 make install
 ```
+
+Introduce jupyter to new kernel as mention here [test](www.google.com)
 
 ## Documentation
 
