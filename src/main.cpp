@@ -8,8 +8,13 @@
 ************************************************************************************/
 #include <memory>
 
-#include "xeus/xkernel.hpp"
-#include "xeus/xkernel_configuration.hpp"
+
+#include <xeus-zmq/xserver_zmq.hpp>
+#include <xeus/xeus_context.hpp>
+#include <xeus/xhelper.hpp>
+#include <xeus/xkernel.hpp>
+#include <xeus/xkernel_configuration.hpp>
+#include <xeus/xlogger.hpp>
 
 #include "custom_interpreter.hpp"
 
@@ -24,7 +29,15 @@ int main(int argc, char* argv[])
     interpreter_ptr interpreter = interpreter_ptr(new ug::xeus_interpreter());
 
     // Create kernel instance and start it
-    xeus::xkernel kernel(config, xeus::get_user_name(), std::move(interpreter));
+   // xeus::xkernel kernel(config, xeus::get_user_name(), std::move(interpreter));
+
+    auto context = xeus::make_context<zmq::context_t>();
+    xeus::xkernel kernel(config,
+                             xeus::get_user_name(),
+                             std::move(context),
+                             std::move(interpreter),
+                             xeus::make_xserver_zmq);
+
     kernel.start();
 
     return 0;

@@ -18,12 +18,17 @@ configure_file (
 # ============
 
 # Be sure to use recent versions
-set(xeus_REQUIRED_VERSION 0.25)
-set(cppzmq_REQUIRED_VERSION 4.3.0)
+# set(xeus_REQUIRED_VERSION 0.25)
+# set(cppzmq_REQUIRED_VERSION 4.3.0)
 
 find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)
-find_package(cppzmq ${cppzmq_REQUIRED_VERSION} REQUIRED)
+# find_package(cppzmq ${cppzmq_REQUIRED_VERSION} REQUIRED)
 
+#set(xeus-zmq_REQUIRED_VERSION 1.0.0)
+#find_package(xeus-zmq ${xeus-zmq_REQUIRED_VERSION} REQUIRED)
+
+#set(xeus-lite_REQUIRED_VERSION 1.0.1)
+#find_package(xeus-lite ${xeus-lite_REQUIRED_VERSION} REQUIRED)
 
 # Flags
 # =====
@@ -64,21 +69,35 @@ set(MY_KERNEL_SRC
 )
 
 
+
 # Kernel executable
 add_executable(${EXECUTABLE_NAME} src/main.cpp ${MY_KERNEL_SRC} )
 
 
 find_library(ug4_LIBRARY NAMES ug4 HINTS ${MY_UG4_ROOT}/lib REQUIRED)	
-message(STATUS "Using ${ug4_LIBRARY}")
+message(STATUS "ug4-xeus: Using ${ug4_LIBRARY}")
+
+
 
 # Find xeus libraries
-find_package(xeus REQUIRED)
+# find_package(xeus REQUIRED)
+set(xeus-zmq_REQUIRED_VERSION 1.0.2)
+find_package(xeus-zmq ${xeus-zmq_REQUIRED_VERSION} REQUIRED)
+message(STATUS "ug4-xeus: Using ${xeus-zmq_LIBRARY}")
+
+
 find_package(xtl REQUIRED)
+message(STATUS "ug4-xeus: Using ${xtl_INCLUDE_DIRS} ${xtl_LIBRARY}")
+
+
+find_library(zmq_LIBRARY NAMES zmq REQUIRED PATHS "${xtl_INCLUDE_DIRS}/../lib")
+message(STATUS "ug4-xeus: Using ${zmq_INCLUDE_DIRS} ${zmq_LIBRARY}")
 
 if(NOT DEFINED ${xeus_LIBRARY})
-			find_library(xeus_LIBRARY NAMES xeus REQUIRED PATHS "${xtl_INCLUDE_DIRS}/../lib")
+		find_library(xeus_LIBRARY NAMES xeus REQUIRED PATHS "${xtl_INCLUDE_DIRS}/../lib")
+		message(STATUS "ug4-xeus: Using ${xeus_LIBRARY}")
 endif() 
-message(STATUS "Using ${xeus_LIBRARY}")
+
 
 # Expand include path
 target_include_directories(${EXECUTABLE_NAME} 
@@ -90,7 +109,8 @@ target_include_directories(${EXECUTABLE_NAME}
 
 
 target_link_libraries(${EXECUTABLE_NAME} 
-	PRIVATE ${xeus_LIBRARY} ${ug4_LIBRARY})
+	PRIVATE ${ug4_LIBRARY} 
+	${xeus-zmq_LIBRARY} xeus ${zmq_LIBRARY}  )
 
 if (APPLE)
     set_target_properties(${EXECUTABLE_NAME} PROPERTIES
